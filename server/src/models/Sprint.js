@@ -14,9 +14,9 @@ SprintSchema.virtual('creator', {
     justOne: true,
     ref: 'Account'
 })
-SprintSchema.virtual('project', {
-    localField: 'projectId',
-    foreignField: '_id',
-    justOne: true,
-    ref: 'Project'
-})
+// SprintSchema.virtual('project', {
+//     localField: 'projectId',
+//     foreignField: '_id',
+//     justOne: true,
+//     ref: 'Project'
+// })
