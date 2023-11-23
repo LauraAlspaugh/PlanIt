@@ -1,8 +1,8 @@
 <template>
   <div class="col-12 d-flex">
     <h1 class=" text-start p-5  project-name">Projects</h1>
-    <button class="text-end project-name btn rounded-pill fs-3 pr-3">Create Project</button>
-
+    <button class="text-end project-name btn rounded-pill fs-3 pr-3" type="button" data-bs-toggle="modal"
+      data-bs-target="#projectFormModal">Create Project</button>
   </div>
 
   <div v-for="project in projects" :key="project.id">
@@ -18,6 +18,7 @@ import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
 import ProjectCard from '../components/ProjectCard.vue';
+import ProjectModal from '../components/ProjectModal.vue';
 
 export default {
   setup() {
