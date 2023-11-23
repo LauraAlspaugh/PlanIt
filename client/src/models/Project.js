@@ -3,7 +3,7 @@ export class Project{
         this.id = data.id || data._id
         this.name = data.name
         this.description = data.description
-        this.createdAt = new Date(data.createdAt).toLocaleTimeString()
+        this.createdAt = new Date(data.createdAt).toLocaleDateString()
         this.updatedAt = new Date(data.updatedAt).toLocaleDateString()
         this.creatorId = data.creatorId
         this.creator = data.creator

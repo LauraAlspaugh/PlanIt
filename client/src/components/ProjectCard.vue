@@ -1,10 +1,18 @@
 <template>
     <div class="container-fluid">
-        <section class="row">
-            <div class="col-4">
-                <p class="fs-1">{{ projectProp.name }}</p>
-            </div>
-        </section>
+        <router-link :to="{ name: 'Project', params: { projectId: projectProp.id } }">
+            <section class="row project-name  p-4 m-3 project-card">
+                <div class="col-4">
+                    <p class="fs-2">{{ projectProp.name }}</p>
+                </div>
+                <div class="col-4">
+
+                </div>
+                <div class="col-4 fs-3">
+                    Created On: {{ projectProp.createdAt }}
+                </div>
+            </section>
+        </router-link>
     </div>
 </template>
 
@@ -22,4 +30,12 @@ export default {
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.project-card {
+    background-color: #D7DBDD;
+}
+
+.project-name {
+    color: #283747;
+}
+</style>

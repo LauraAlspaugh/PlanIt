@@ -1,5 +1,10 @@
 <template>
-  <h1>Welcome to PlanIt!</h1>
+  <div class="col-12 d-flex">
+    <h1 class=" text-start p-5  project-name">Projects</h1>
+    <button class="text-end project-name btn rounded-pill fs-3 pr-3">Create Project</button>
+
+  </div>
+
   <div v-for="project in projects" :key="project.id">
 
     <ProjectCard :projectProp="project" />
@@ -36,4 +41,9 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.project-name {
+  font-family: 'Pinyon Script', cursive;
+  color: #935116
+}
+</style>
