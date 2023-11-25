@@ -39,7 +39,7 @@ export default {
                     Pop.success('Project Created!')
                     Modal.getOrCreateInstance('#projectFormModal').hide()
                     editable.value = {}
-                    router.push({ name: 'Project', params: { projectId: project.id } })
+                    router.push({ name: 'ProjectDetails', params: { projectId: project.id } })
                 } catch (error) {
                     Pop.error(error)
                 }

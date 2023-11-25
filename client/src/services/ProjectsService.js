@@ -7,7 +7,8 @@ class ProjectsService{
     async getProjects(){
         const res = await api.get('api/projects')
         logger.log('getting projects!', res.data)
-        AppState.projects = res.data.map(pojo => new Project(pojo))
+        const newProjects = res.data.map(pojo => new Project(pojo))
+    AppState.myProjects = newProjects
         }
         async createProject(projectData) {
             const res = await api.post('api/projects', projectData)
@@ -17,11 +18,28 @@ class ProjectsService{
             return newProject
         }
         async getProjectById(projectId){
-            AppState.activeProject = null
+            // 
             const res = await api.get(`api/projects/${projectId}`)
-            logger.log('getting Project by id', res.data)
-            AppState.activeProject = new Project(res.data)
+    logger.log('GOT PROJECT', res.data)
+    const newProject = new Project(res.data)
+    AppState.activeProject = newProject
             
+            }
+            async destroyProject(projectId){
+                const res = await api.delete(`api/projects/${projectId}`)
+                logger.log('destroying project', res.data)
+                AppState.activeProject = null
+                const projectIndex = AppState.myProjects.findIndex(project => project.id == projectId)
+            if (projectIndex == -1) { throw new Error(`No project found with the id of ${projectId}`) }
+            AppState.myProjects.splice(projectIndex, 1)
+
+
+            }
+            clearAppState() {
+                AppState.activeProject = null
+                AppState.notes.length = 0
+                AppState.sprints.length = 0
+                AppState.tasks.length = 0
             }
 }
 

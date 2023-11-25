@@ -5,10 +5,11 @@ export const AppState = reactive({
   user: {},
   /** @type {import('./models/Account.js').Account} */
   account: {}, 
-  notes: {},
-  tasks: {},
-  sprints: {},
-  projects: {},
+  notes: [],
+  tasks: [],
+  sprints: [],
   activeProject: null,
-  myProjects: []
+  myProjects: [],
+  activeSprint: null,
+  activeTask: null
 })

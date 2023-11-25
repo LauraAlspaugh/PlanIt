@@ -10,15 +10,15 @@ class ProjectsService {
         } await project.delete()
         return "project has been deleted!"
     }
-    async getProjectById(projectId) {
+    async getProjectById(projectId, userId) {
         const project = (await dbContext.Projects.findById(projectId)).populate('creator', 'name picture email ')
         if (!project) {
             throw new BadRequest('This is not a valid project id')
         }
         return project
     }
-    async getProjects() {
-        const projects = await dbContext.Projects.find().populate('creator', 'name picture email')
+    async getProjects(userId) {
+        const projects = await dbContext.Projects.find({ creatorId: userId }).populate('creator', 'name picture email')
         return projects
     }
     async createProject(projectData) {

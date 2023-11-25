@@ -10,12 +10,12 @@ export class ProjectsController extends BaseController {
     constructor() {
         super('api/projects')
         this.router
+            .use(Auth0Provider.getAuthorizedUserInfo)
             .get('', this.getProjects)
             .get('/:projectId', this.getProjectById)
             .get('/:projectId/sprints', this.getSprintsByProjectId)
             .get('/:projectId/tasks', this.getTasksByProjectId)
             .get('/:projectId/notes', this.getNotesByProjectId)
-            .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createProject)
             .delete('/:projectId', this.destroyProject)
     }
@@ -63,7 +63,8 @@ export class ProjectsController extends BaseController {
     async getProjectById(request, response, next) {
         try {
             const projectId = request.params.projectId
-            const project = await projectsService.getProjectById(projectId)
+            const userId = request.userInfo.id
+            const project = await projectsService.getProjectById(projectId, userId)
             return response.send(project)
         } catch (error) {
             next(error)
@@ -71,8 +72,8 @@ export class ProjectsController extends BaseController {
     }
     async getProjects(request, response, next) {
         try {
-
-            const projects = await projectsService.getProjects()
+            const userId = request.userInfo.id
+            const projects = await projectsService.getProjects(userId)
             return response.send(projects)
         } catch (error) {
             next(error)

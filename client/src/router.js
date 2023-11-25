@@ -17,9 +17,10 @@ const routes = [
     component: loadPage('AboutPage')
   },
   {
-    path: '/project',
-    name: 'Project',
-    component: loadPage('ProjectDetailsPage')
+    path: '/projects/:projectId',
+    name: 'ProjectDetails',
+    component: loadPage('ProjectDetailsPage'),
+    beforeEnter: authGuard
   },
   {
     path: '/account',
