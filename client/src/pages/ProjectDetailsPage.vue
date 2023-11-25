@@ -7,8 +7,20 @@
                         class="ms-2 mdi mdi-delete-forever text-info"></i></p>
                 <p class="fs-5">{{ project.description }}</p>
             </div>
+            <div class="col-12 d-flex justify-content-between align-items-end  m-3 p-3">
+                <div>
+                    <p class="fs-3">Sprints</p>
+                    <p>Group your tasks into sprints for better organization. </p>
+                </div>
+                <!-- <button data-bs-toggle="modal" data-bs-target="#sprintFormModal" class="btn btn-dark px-5">Create
+                    Sprint</button> -->
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#sprintFormModal">
+                    Create Sprint
+                    <!-- <SprintModal /> -->
+                </button>
+            </div>
             <div v-for="sprint in sprints" :key="sprint.id" class="col-12">
-                {{ sprints }}
+                <SprintCard :sprintProp="sprint" />
             </div>
         </section>
     </div>
@@ -26,65 +38,61 @@ import { sprintsService } from '../services/SprintsService.js';
 import { tasksService } from '../services/TasksService.js';
 import { notesService } from '../services/NotesService.js';
 import { router } from '../router.js';
+import SprintModal from '../components/SprintModal.vue';
+import SprintCard from '../components/SprintCard.vue';
 export default {
     setup() {
-
         const route = useRoute();
         const router = useRouter();
         const watchableProjectId = computed(() => route.params.projectId);
         watch(watchableProjectId, () => {
-            projectsService.clearAppState()
-            getProjectById()
+            projectsService.clearAppState();
+            getProjectById();
             // getNotesByProjectId()
-            getSprintsByProjectId()
+            getSprintsByProjectId();
             // getTasksByProjectId()
         }, { immediate: true });
-
-
-
         async function getProjectById() {
             try {
-                const projectId = watchableProjectId.value
+                const projectId = watchableProjectId.value;
                 await projectsService.getProjectById(projectId);
             }
             catch (error) {
-                logger.error(error)
+                logger.error(error);
                 Pop.error((error));
             }
         }
         async function getSprintsByProjectId() {
             try {
-                const projectId = watchableProjectId.value
-                await sprintsService.getSprintsByProjectId(projectId)
-            } catch (error) {
-                logger.error(error)
-                Pop.error(error)
-
+                const projectId = watchableProjectId.value;
+                await sprintsService.getSprintsByProjectId(projectId);
+            }
+            catch (error) {
+                logger.error(error);
+                Pop.error(error);
             }
         }
         async function getTasksByProjectId() {
             try {
-                const projectId = watchableProjectId.value
-                await tasksService.getTasksByProjectId(projectId)
-            } catch (error) {
-                logger.error(error)
-                Pop.error(error)
-
+                const projectId = watchableProjectId.value;
+                await tasksService.getTasksByProjectId(projectId);
+            }
+            catch (error) {
+                logger.error(error);
+                Pop.error(error);
             }
         }
         async function getNotesByProjectId() {
             try {
-                const projectId = watchableProjectId.value
-                await notesService.getNotesByProjectId(projectId)
-            } catch (error) {
-                logger.error(error)
-                Pop.error(error)
-
+                const projectId = watchableProjectId.value;
+                await notesService.getNotesByProjectId(projectId);
+            }
+            catch (error) {
+                logger.error(error);
+                Pop.error(error);
             }
         }
-
         return {
-
             project: computed(() => AppState.activeProject),
             myProjects: computed(() => AppState.myProjects),
             account: computed(() => AppState.account),
@@ -92,21 +100,23 @@ export default {
             activeTask: computed(() => AppState.activeTask),
             async destroyProject() {
                 try {
-                    const project = AppState.activeProject
-                    const wantstoDestroy = await Pop.confirm('Are you sure you want to delete this project? ')
+                    const project = AppState.activeProject;
+                    const wantstoDestroy = await Pop.confirm('Are you sure you want to delete this project? ');
                     if (!wantstoDestroy) {
-                        return
-                    } await projectsService.destroyProject(project.id)
-                    Pop.success('this project has been destroyed! ')
-                    router.push({ name: 'Home' })
-                } catch (error) {
-                    logger.error(error)
-                    Pop.error(error)
-
+                        return;
+                    }
+                    await projectsService.destroyProject(project.id);
+                    Pop.success('this project has been destroyed! ');
+                    router.push({ name: 'Home' });
+                }
+                catch (error) {
+                    logger.error(error);
+                    Pop.error(error);
                 }
             }
-        }
-    }
+        };
+    },
+    components: { SprintModal, SprintCard }
 };
 </script>
 

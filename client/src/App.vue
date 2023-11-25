@@ -10,12 +10,40 @@
   </footer>
   <ModalComponent :modalId="'projectFormModal'">
 
+
     <template #modalHeader>
       Create Project
     </template>
 
     <template #modalBody>
       <ProjectModal />
+
+    </template>
+  </ModalComponent>
+
+  <ModalComponent :modalId="'sprintFormModal'">
+
+
+    <template #modalHeader>
+      Create Sprint
+    </template>
+
+    <template #modalBody>
+
+      <SprintModal />
+    </template>
+  </ModalComponent>
+
+  <ModalComponent :modalId="'taskFormModal'">
+
+
+    <template #modalHeader>
+      Create Task
+    </template>
+
+    <template #modalBody>
+
+      <TaskModal />
     </template>
   </ModalComponent>
 </template>
@@ -26,6 +54,8 @@ import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import ModalComponent from './components/ModalComponent.vue'
 import ProjectModal from './components/ProjectModal.vue'
+import SprintModal from './components/SprintModal.vue'
+import TaskModal from './components/TaskModal.vue'
 
 export default {
   setup() {
@@ -33,7 +63,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar, ModalComponent, ProjectModal }
+  components: { Navbar, ModalComponent, ProjectModal, SprintModal, TaskModal }
 }
 </script>
 <style lang="scss">

@@ -16,6 +16,9 @@ logger.log('creating sprint!')
 const newSprint = new Sprint(res.data)
 AppState.sprints.push(newSprint)
 }
+setActiveSprint(sprint) {
+    AppState.activeSprint = sprint
+}
 }
 
- export const sprintsService = new SprintsService()
+export const sprintsService = new SprintsService()
