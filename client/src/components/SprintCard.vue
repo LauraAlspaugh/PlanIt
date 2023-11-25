@@ -17,7 +17,8 @@
             </div>
             <section class="row">
                 <div v-for="task in tasks" :key="task.id" class="col-12">
-                    {{ task.name }}
+                    <!-- {{ task.name }} -->
+                    <TaskCard :taskProp="task" />
                 </div>
             </section>
 
@@ -33,23 +34,26 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import { Sprint } from '../models/Sprint.js';
 import { sprintsService } from '../services/SprintsService.js';
+import TaskCard from './TaskCard.vue';
+
+
 export default {
     props: { sprintProp: { type: Sprint, required: true } },
     setup(props) {
         return {
             tasks: computed(() => AppState.tasks.filter(task => task.sprintId == props.sprintProp.id)),
             combinedTaskWeight: computed(() => {
-                let total = 0
-                const tasks = AppState.tasks.filter(task => task.sprintId == props.sprintProp.id)
-                tasks.forEach(task => total += task.weight)
-                return total
-
+                let total = 0;
+                const tasks = AppState.tasks.filter(task => task.sprintId == props.sprintProp.id);
+                tasks.forEach(task => total += task.weight);
+                return total;
             }),
             setActiveSprint() {
                 sprintsService.setActiveSprint(props.sprintProp);
             }
         };
     },
+    components: { TaskCard, TaskCard }
 }
 </script>
 
