@@ -4,7 +4,8 @@
             <div class="col-12 d-flex align-items-center ">
                 <i v-if="taskProp.isComplete" class="mdi mdi-checkbox-marked fs-2"></i>
                 <i v-else class="mdi mdi-checkbox-blank-outline fs-2"></i>
-                <button @click="setActiveTask()" class=" btn rounded-pill ms-3 btn-light">{{ taskProp.name }}</button>
+                <button @click="setActiveTask()" data-bs-toggle="offcanvas" data-bs-target="#taskDetailsOffcanvas"
+                    class=" btn rounded-pill ms-3 btn-light">{{ taskProp.name }}</button>
                 <i v-if="account.id == taskProp.creatorId" @click="destroyTask" role="button "
                     class="mdi mdi-delete-forever fs-2 ms-3"></i>
             </div>

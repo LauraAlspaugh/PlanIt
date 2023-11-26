@@ -11,5 +11,6 @@ export const AppState = reactive({
   activeProject: null,
   myProjects: [],
   activeSprint: null,
-  activeTask: null
+  activeTask: null,
+  isEditingTask: false
 })

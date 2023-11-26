@@ -24,8 +24,25 @@
             </div>
         </section>
     </div>
-</template>
 
+
+    <OffCanvasCard :offcanvasId="'taskDetailsOffcanvas'" :offcanvasPlacement="'offcanvas-end'">
+        <template v-if="activeTask" #offcanvasTitle>
+            <span>
+                {{ activeTask.name }}
+            </span>
+
+            <button v-if="activeTask.creatorId == account.id" @click="startEditing()" class="btn btn-outline-info ms-3"
+                :title="`Edit ${activeTask.name}`">
+                <i class="mdi mdi-pencil"></i>
+            </button>
+        </template>
+
+        <template #offcanvasBody>
+            <TaskDetails />
+        </template>
+    </OffCanvasCard>
+</template>
 
 <script>
 import { AppState } from '../AppState';
@@ -40,6 +57,8 @@ import { notesService } from '../services/NotesService.js';
 import { router } from '../router.js';
 import SprintModal from '../components/SprintModal.vue';
 import SprintCard from '../components/SprintCard.vue';
+import OffCanvasCard from '../components/OffCanvasCard.vue';
+import TaskDetails from '../components/TaskDetails.vue';
 export default {
     setup() {
         const route = useRoute();
@@ -113,10 +132,13 @@ export default {
                     logger.error(error);
                     Pop.error(error);
                 }
+            },
+            startEditing() {
+                tasksService.changeEditStatus(true)
             }
         };
     },
-    components: { SprintModal, SprintCard }
+    components: { SprintCard, OffCanvasCard, TaskDetails }
 };
 </script>
 

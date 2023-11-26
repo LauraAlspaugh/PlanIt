@@ -57,6 +57,7 @@ import ProjectModal from './components/ProjectModal.vue'
 import SprintModal from './components/SprintModal.vue'
 import TaskModal from './components/TaskModal.vue'
 
+
 export default {
   setup() {
     return {

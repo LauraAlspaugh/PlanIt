@@ -21,6 +21,18 @@ const taskIndex = AppState.tasks.findIndex(task => task.id == taskId)
     if (taskIndex == -1) { throw new Error('No task found with this id') }
     AppState.tasks.splice(taskIndex, 1)
     }
+    async updateTaskStatus(taskData){
+const res = await api.put(`api/tasks/${taskData}`)
+logger.log('updating this task!')
+const newTask = new Task(res.data)
+AppState.activeTask = newTask
+const taskIndex = AppState.tasks.findIndex(task => task.id == newTask.id)
+    if (taskIndex == -1) { throw new Error('no task for this id') }
+    AppState.tasks.splice(taskIndex, 1, newTask)
+    }
+    changeEditStatus(wantsToEdit) {
+        AppState.isEditingTask = wantsToEdit
+    }
 }
 
- export const tasksService = new TasksService()
+export const tasksService = new TasksService()
