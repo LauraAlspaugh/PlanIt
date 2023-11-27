@@ -9,6 +9,10 @@
             <input v-model="editable.weight" type="number" class="form-control" id="taskWeight" required min="1" max="5"
                 placeholder="Task Weight...">
         </div>
+        <div class="mb-3">
+            <label class="me-2" for="isComplete">Is Complete</label>
+            <input v-model="editable.isComplete" type="checkbox" class="form-check-input" id="isComplete">
+        </div>
 
 
         <div class="text-end">

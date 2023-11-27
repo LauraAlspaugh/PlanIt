@@ -17,6 +17,13 @@ async destroyNote(noteId){
     if (noteIndex == -1) { throw new Error('no note with this id') }
     AppState.notes.splice(noteIndex, 1)
 }
+async getNotesByProjectId(projectId) {
+    const res = await api.get(`api/projects/${projectId}/notes`)
+    logger.log('Getting notes', res.data)
+    const newNotes = res.data.map(pojo => new Note(pojo))
+    AppState.notes = newNotes
+}
+
 }
 
 export const notesService =  new NotesService()

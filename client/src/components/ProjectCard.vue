@@ -3,14 +3,15 @@
         <router-link :to="{ name: 'ProjectDetails', params: { projectId: projectProp.id } }">
             <section class="row project-name  p-3 project-card">
                 <div class="col-4">
-                    <p v-if="route.name == 'Home'" class="fs-2">{{ projectProp.name }}</p>
+                    <p v-if="route.name == 'Home'" class="fs-2 project-text">{{ projectProp.name }}</p>
+                    <p v-else data-bs-dismiss="offcanvas">{{ projectProp.name }}</p>
                 </div>
 
-                <div v-if="route.name == 'Home'" class="col-2">
+                <div v-if="route.name == 'Home'" class="col-2 rounded-circle">
                     <img :src="projectProp.creator.picture" alt="Creator">
                 </div>
 
-                <div class="col-4 fs-3">
+                <div class="col-4 fs-3 project-text">
                     Created On: {{ projectProp.createdAt }}
                 </div>
             </section>
@@ -43,5 +44,14 @@ export default {
 
 .project-name {
     color: #283747;
+    border-radius: 7px;
+}
+
+img {
+    width: 100px;
+}
+
+.project-text {
+    font-family: 'Pinyon Script', cursive;
 }
 </style>

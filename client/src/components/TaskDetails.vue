@@ -33,6 +33,11 @@
                 <NoteCard :noteProp="note" />
             </div>
         </section>
+        <section v-else class="row">
+            <div class="col-12">
+                <EditTask />
+            </div>
+        </section>
     </div>
 </template>
 
@@ -45,6 +50,7 @@ import Pop from '../utils/Pop.js';
 import { tasksService } from '../services/TasksService.js';
 import { notesService } from '../services/NotesService.js';
 import NoteCard from './NoteCard.vue';
+import EditTask from './EditTask.vue';
 export default {
     setup() {
         const editable = ref({});
@@ -78,7 +84,7 @@ export default {
             }
         };
     },
-    components: { NoteCard }
+    components: { NoteCard, EditTask }
 };
 </script>
 

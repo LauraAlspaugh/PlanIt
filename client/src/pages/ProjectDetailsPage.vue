@@ -2,19 +2,25 @@
     <div class="container">
         <section v-if="project" class="row project-card">
             <div class="col-12 text-center">
+                <div class="settings-buttons">
+                    <button data-bs-toggle="offcanvas" data-bs-target="#projectsNavigationOffcanvas"
+                        class="btn mb-1 btn-dark fs-1 d-block" title="See your projects" type="button">
+                        <i class="mdi mdi-alpha-p-circle-outline"></i>
+                    </button>
+                </div>
                 <p class="fs-1 ">{{ project.name }} <i v-if="account.id == project.creatorId" @click="destroyProject()"
                         :title="'Delete this project'" role="button" type="button"
                         class="ms-2 mdi mdi-delete-forever text-info"></i></p>
                 <p class="fs-5">{{ project.description }}</p>
             </div>
-            <div class="col-12 d-flex justify-content-between align-items-end  m-3 p-3">
+            <div class="col-12  align-items-end  m-3 p-3">
                 <div>
                     <p class="fs-3">Sprints</p>
                     <p>Group your tasks into sprints for better organization. </p>
                 </div>
                 <!-- <button data-bs-toggle="modal" data-bs-target="#sprintFormModal" class="btn btn-dark px-5">Create
                     Sprint</button> -->
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#sprintFormModal">
+                <button type="button" class="btn btn-dark pr-4" data-bs-toggle="modal" data-bs-target="#sprintFormModal">
                     Create Sprint
                     <!-- <SprintModal /> -->
                 </button>
@@ -24,6 +30,7 @@
             </div>
         </section>
     </div>
+
 
 
     <OffCanvasCard :offcanvasId="'taskDetailsOffcanvas'" :offcanvasPlacement="'offcanvas-end'">
@@ -40,6 +47,28 @@
 
         <template #offcanvasBody>
             <TaskDetails />
+        </template>
+    </OffCanvasCard>
+
+    <OffCanvasCard :offcanvasId="'projectsNavigationOffcanvas'">
+        <template #offcanvasTitle>
+            <p class="fs-3 text-dark">Projects</p>
+        </template>
+
+        <template #offcanvasBody>
+            <div class="container-fluid">
+                <section class="row justify-content-between">
+                    <div class="col-4">
+                        <p class="text-dark">Name</p>
+                    </div>
+                    <div class="col-4">
+                        <p class="text-dark">Started</p>
+                    </div>
+                </section>
+                <section v-for="project in myProjects" :key="project.id" class="row justify-content-between">
+                    <ProjectCard :projectProp="project" />
+                </section>
+            </div>
         </template>
     </OffCanvasCard>
 </template>
@@ -59,6 +88,7 @@ import SprintModal from '../components/SprintModal.vue';
 import SprintCard from '../components/SprintCard.vue';
 import OffCanvasCard from '../components/OffCanvasCard.vue';
 import TaskDetails from '../components/TaskDetails.vue';
+import ProjectCard from '../components/ProjectCard.vue';
 export default {
     setup() {
         const route = useRoute();
@@ -67,9 +97,9 @@ export default {
         watch(watchableProjectId, () => {
             projectsService.clearAppState();
             getProjectById();
-            // getNotesByProjectId()
+            getNotesByProjectId()
             getSprintsByProjectId();
-            // getTasksByProjectId()
+            getTasksByProjectId()
         }, { immediate: true });
         async function getProjectById() {
             try {
@@ -114,6 +144,7 @@ export default {
         return {
             project: computed(() => AppState.activeProject),
             myProjects: computed(() => AppState.myProjects),
+            projects: computed(() => AppState.projects),
             account: computed(() => AppState.account),
             sprints: computed(() => AppState.sprints),
             activeTask: computed(() => AppState.activeTask),
@@ -138,7 +169,7 @@ export default {
             }
         };
     },
-    components: { SprintCard, OffCanvasCard, TaskDetails }
+    components: { SprintCard, OffCanvasCard, TaskDetails, ProjectCard }
 };
 </script>
 
